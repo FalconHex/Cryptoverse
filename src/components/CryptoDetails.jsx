@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect  } from 'react'
 import HTMLReactParser from 'html-react-parser';
 import { useParams } from 'react-router-dom';
 import millify from 'millify';
@@ -17,6 +17,26 @@ const CryptoDetails = () => {
     const [timePeriod, setTimePeriod] = useState('7d');
     const { data, isFetching } = useGetCryptoDetailsQuery(coinId);
     const { data: coinHistory } = useGetCryptoHistoryQuery({ coinId, timePeriod});
+    
+    const [activeChart, setActiveChart] = useState(true);
+    const [screenSize, setscreenSize] = useState(null);
+
+    useEffect(() => {
+        const handleResize = () => setscreenSize(window.innerWidth);
+        
+        window.addEventListener('resize', handleResize);
+        handleResize();
+        return() => window.removeEventListener('resize', handleResize);
+
+    }, []);
+
+    useEffect(() => {
+        if(screenSize < 768){
+            setActiveChart(false);
+        } else{
+            setActiveChart(true);
+        }
+    }, [screenSize]);
 
     const cryptoDetails = data?.data?.coin;
 
@@ -59,7 +79,12 @@ const CryptoDetails = () => {
             >
                 {time.map((date) => <Option key={date}>{date}</Option>)}
             </Select>
-            <LineChart coinHistory={coinHistory} currentPrice={millify(cryptoDetails.price)} coinName={cryptoDetails.name} />
+
+            {activeChart && (
+                <LineChart coinHistory={coinHistory} currentPrice={millify(cryptoDetails.price)} coinName={cryptoDetails.name} />
+            )}
+            
+            
             <Col className="stats-container">
                 <Col className="coin-value-statistics">
                     <Col className="coin-value-statistics-heading">
