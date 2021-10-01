@@ -321,7 +321,7 @@ width: 70%;
     display: flex;
     justify-content: space-between;
     gap: 50px;
-    color: #0071bd;
+    color: #00bdb0;
 }
 .chart-title{
     color: #0071bd !important;
