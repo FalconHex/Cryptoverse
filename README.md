@@ -1,4 +1,7 @@
 # This is a Crypto info site
+
+https://user-images.githubusercontent.com/68680026/142036931-9ae11847-5caf-433a-bdda-99494bd795f4.mp4
+
 ## Includes features like :  
 1. Information Regarding 100 cryptocurrencies  
 2. Line chart showing change in price over different period of time  
